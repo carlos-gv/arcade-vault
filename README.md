@@ -14,3 +14,14 @@ https://github.com/Klerith/fernando-skills
 ```bash
 npx skills@latest add Klerith/fernando-skills
 ```
+
+## Commands
+
+```bash
+npm run dev     # start dev server (Turbopack, on by default in Next 16)
+npm run build   # production build (Turbopack by default; fails if a webpack config is present — see AGENTS.md note)
+npm run start   # run the production build
+npm run lint    # eslint via eslint-config-next (flat config, eslint.config.mjs)
+```
+
+No test runner is configured yet

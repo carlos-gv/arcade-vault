@@ -8,16 +8,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Arcade Vault ("ARCADE VAULT") — a neon/retro arcade platform where users play browser games and compete on a leaderboard for high scores. Spanish is the UI language (see `references/templates/`). Currently just a fresh `create-next-app` scaffold (App Router, TypeScript, Tailwind v4) — the actual app has not been built yet.
 
-## Commands
 
-```bash
-npm run dev     # start dev server (Turbopack, on by default in Next 16)
-npm run build   # production build (Turbopack by default; fails if a webpack config is present — see AGENTS.md note)
-npm run start   # run the production build
-npm run lint    # eslint via eslint-config-next (flat config, eslint.config.mjs)
-```
+## Skills
 
-No test runner is configured yet.
+Use always /frontend-design when you requiere design user interfaces.
 
 ## Working in this repo — read AGENTS.md first
 
