@@ -1,6 +1,6 @@
 # 02 — Página de inicio (Home)
 
-**Estado:** Approved
+**Estado:** Implemented
 **Depende de:** SPEC 01
 **Fecha:** 2026-09-13
 
@@ -51,13 +51,13 @@ No se introduce ningún modelo de datos nuevo. El Home reutiliza `GAMES` de `lib
 
 ## Criterios de aceptación
 
-- [ ] `/` muestra la landing completa: hero, features, preview de 6 juegos, stats, actividad en vivo, pricing/FAQ y CTA final, con las animaciones "reveal" al hacer scroll.
-- [ ] `/games` muestra el catálogo completo de 8 juegos con buscador y filtro por categoría (idéntico comportamiento al `/` anterior).
-- [ ] El nav muestra "Inicio", "Biblioteca", "Salón de la Fama" y "Acerca de"; "Inicio" está activo en `/` y "Biblioteca" está activo en `/games`, `/game/[id]` y `/game/[id]/play`.
-- [ ] Clic en "Acerca de" navega a `/about` y muestra el 404 por defecto de Next.js (no hay página propia todavía).
-- [ ] En el Home: "EXPLORAR JUEGOS", "VER TODOS LOS JUEGOS →" e "INSERTAR MONEDA →" navegan a `/games`; "CREAR CUENTA" y "EMPEZAR GRATIS →" navegan a `/auth`; un mini-card del preview navega a `/game/<id>`; "VER SALÓN →" navega a `/leaderboard`.
-- [ ] "VOLVER AL VAULT" en `/game/<id>` y "VOLVER A LA BIBLIOTECA" en `/leaderboard` navegan a `/games` (ya no a `/`).
-- [ ] El logo del nav navega a `/` (Home) desde cualquier pantalla.
+- [x] `/` muestra la landing completa: hero, features, preview de 6 juegos, stats, actividad en vivo, pricing/FAQ y CTA final, con las animaciones "reveal" al hacer scroll.
+- [x] `/games` muestra el catálogo completo de 8 juegos con buscador y filtro por categoría (idéntico comportamiento al `/` anterior).
+- [x] El nav muestra "Inicio", "Biblioteca", "Salón de la Fama" y "Acerca de"; "Inicio" está activo en `/` y "Biblioteca" está activo en `/games`, `/game/[id]` y `/game/[id]/play`.
+- [x] Clic en "Acerca de" navega a `/about` y muestra el 404 por defecto de Next.js (no hay página propia todavía).
+- [x] En el Home: "EXPLORAR JUEGOS", "VER TODOS LOS JUEGOS →" e "INSERTAR MONEDA →" navegan a `/games`; "CREAR CUENTA" y "EMPEZAR GRATIS →" navegan a `/auth`; un mini-card del preview navega a `/game/<id>`; "VER SALÓN →" navega a `/leaderboard`.
+- [x] "VOLVER AL VAULT" en `/game/<id>` y "VOLVER A LA BIBLIOTECA" en `/leaderboard` navegan a `/games` (ya no a `/`).
+- [x] El logo del nav navega a `/` (Home) desde cualquier pantalla.
 
 ## Decisiones tomadas y descartadas
 
