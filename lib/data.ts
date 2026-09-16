@@ -87,6 +87,17 @@ export const GAMES: Game[] = [
     plays: "15.6K",
   },
   {
+    id: "asteroides",
+    title: "ASTEROIDES",
+    short: "Sobrevive en un campo de rocas espaciales sin fin.",
+    long: "Tu nave flota en un espacio toroidal —cruza un borde y reapareces por el opuesto— mientras esquivas y destruyes asteroides. Los grandes se parten en medianos, los medianos en pequeños. Recoge el power-up de disparo triple cuando aparezca para limpiar el campo más rápido.",
+    cat: "SHOOTER",
+    cover: "cover-asteroides",
+    color: "cyan",
+    best: 38200,
+    plays: "8.7K",
+  },
+  {
     id: "ranaria",
     title: "RANARIA",
     short: "Cruza la autopista de pixeles.",
@@ -113,9 +124,24 @@ export const GAMES: Game[] = [
 export const CATS = ["TODOS", "ARCADE", "PUZZLE", "SHOOTER", "VERSUS"] as const;
 
 export const PLAYERS = [
-  "PX_KAI", "NEONFOX", "Z3R0COOL", "M00NRYU", "VAULT_07", "GLITCHA",
-  "ATARI_KID", "CYBER_LU", "MAGENTA88", "SCANLINE", "BIT_LORD", "ARKADYA",
-  "DROID_X", "RGB_QUEEN", "PIXEL_DAD", "RETROVIRA", "VECTORX", "JOY_STK",
+  "PX_KAI",
+  "NEONFOX",
+  "Z3R0COOL",
+  "M00NRYU",
+  "VAULT_07",
+  "GLITCHA",
+  "ATARI_KID",
+  "CYBER_LU",
+  "MAGENTA88",
+  "SCANLINE",
+  "BIT_LORD",
+  "ARKADYA",
+  "DROID_X",
+  "RGB_QUEEN",
+  "PIXEL_DAD",
+  "RETROVIRA",
+  "VECTORX",
+  "JOY_STK",
 ];
 
 export function seededScores(seed: number, count = 12): ScoreRow[] {
@@ -125,13 +151,22 @@ export function seededScores(seed: number, count = 12): ScoreRow[] {
   const rows: ScoreRow[] = [];
   for (let i = 0; i < count; i++) {
     let name: string;
-    do { name = PLAYERS[Math.floor(rand() * PLAYERS.length)]; } while (used.has(name) && used.size < PLAYERS.length);
+    do {
+      name = PLAYERS[Math.floor(rand() * PLAYERS.length)];
+    } while (used.has(name) && used.size < PLAYERS.length);
     used.add(name);
     const base = Math.floor(50000 + rand() * 250000);
     const score = base - i * Math.floor(2000 + rand() * 4000);
     const day = String(1 + Math.floor(rand() * 28)).padStart(2, "0");
     const mon = String(1 + Math.floor(rand() * 12)).padStart(2, "0");
-    rows.push({ rank: i + 1, name, score: Math.max(score, 1000), date: `${day}/${mon}/2026` });
+    rows.push({
+      rank: i + 1,
+      name,
+      score: Math.max(score, 1000),
+      date: `${day}/${mon}/2026`,
+    });
   }
-  return rows.sort((a, b) => b.score - a.score).map((r, i) => ({ ...r, rank: i + 1 }));
+  return rows
+    .sort((a, b) => b.score - a.score)
+    .map((r, i) => ({ ...r, rank: i + 1 }));
 }
