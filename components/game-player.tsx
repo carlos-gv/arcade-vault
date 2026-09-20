@@ -14,6 +14,8 @@ const DEMO_SCORE = 15420;
 const DEMO_LIVES = 3;
 const DEMO_LEVEL = 2;
 
+type SaveState = "idle" | "guardando" | "guardado" | "error";
+
 export function GamePlayer({ game }: { game: Game }) {
   const { user } = useAuth();
   const isAsteroids = game.id === "asteroides";
@@ -26,6 +28,9 @@ export function GamePlayer({ game }: { game: Game }) {
     level: 1,
     state: "playing",
   });
+  const [playerName, setPlayerName] = useState("");
+  const [saveState, setSaveState] = useState<SaveState>("idle");
+  const [saveError, setSaveError] = useState("");
   const name = user ? user.name : "INVITADO";
 
   const score = isAsteroids ? liveState.score : DEMO_SCORE;
@@ -47,6 +52,41 @@ export function GamePlayer({ game }: { game: Game }) {
   const handleFinClick = () => {
     if (isAsteroids) asteroidsRef.current?.forceGameOver();
     else setOver((o) => !o);
+  };
+
+  const handleSaveScore = async () => {
+    setSaveState("guardando");
+    setSaveError("");
+    try {
+      const res = await fetch("/api/scores", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ gameId: game.id, score, playerName }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        if (res.status === 429) {
+          setSaveError(
+            "Espera unos segundos antes de guardar otra puntuación.",
+          );
+        } else {
+          setSaveError(body?.error ?? "No se pudo guardar la puntuación.");
+        }
+        setSaveState("error");
+        return;
+      }
+      setSaveState("guardado");
+    } catch {
+      setSaveError("No se pudo guardar la puntuación.");
+      setSaveState("error");
+    }
+  };
+
+  const handleRestart = () => {
+    setPlayerName("");
+    setSaveState("idle");
+    setSaveError("");
+    asteroidsRef.current?.restart();
   };
 
   return (
@@ -142,13 +182,69 @@ export function GamePlayer({ game }: { game: Game }) {
                   PUNTUACIÓN FINAL · {score.toLocaleString("es-ES")}
                 </div>
                 {isAsteroids && (
-                  <button
-                    className="btn yellow"
-                    style={{ marginTop: 14 }}
-                    onClick={() => asteroidsRef.current?.restart()}
-                  >
-                    JUGAR DE NUEVO
-                  </button>
+                  <>
+                    <div
+                      style={{
+                        marginTop: 18,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: 10,
+                      }}
+                    >
+                      {saveState === "guardado" ? (
+                        <div
+                          className="mono"
+                          style={{ fontSize: 11, color: "var(--green)" }}
+                        >
+                          ✔ PUNTUACIÓN GUARDADA
+                        </div>
+                      ) : (
+                        <>
+                          <input
+                            value={playerName}
+                            onChange={(e) => setPlayerName(e.target.value)}
+                            placeholder="NOMBRE (OPCIONAL)"
+                            maxLength={12}
+                            className="mono"
+                            style={{
+                              background: "var(--bg-2)",
+                              border: "1px solid var(--line)",
+                              color: "var(--ink)",
+                              padding: "8px 12px",
+                              textAlign: "center",
+                              letterSpacing: "0.08em",
+                            }}
+                            disabled={saveState === "guardando"}
+                          />
+                          <button
+                            className="btn magenta"
+                            onClick={handleSaveScore}
+                            disabled={saveState === "guardando"}
+                          >
+                            {saveState === "guardando"
+                              ? "GUARDANDO…"
+                              : "GUARDAR PUNTUACIÓN"}
+                          </button>
+                          {saveState === "error" && (
+                            <div
+                              className="mono"
+                              style={{ fontSize: 10, color: "var(--magenta)" }}
+                            >
+                              {saveError}
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                    <button
+                      className="btn yellow"
+                      style={{ marginTop: 14 }}
+                      onClick={handleRestart}
+                    >
+                      JUGAR DE NUEVO
+                    </button>
+                  </>
                 )}
               </div>
             </div>
